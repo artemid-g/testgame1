@@ -60,3 +60,20 @@ function levelUp() {
     addMessage(`Поздравляем! Вы перешли на уровень ${gameState.level}`);
     initGame(); // Новая карта для нового уровня
 }
+function killEnemy(enemyIndex) {
+    // Удаляем врага
+    gameState.enemies.splice(enemyIndex, 1);
+
+    // Даём опыт
+    const expGain = 25;
+    gameState.player.exp += expGain;
+    addMessage(`Вы победили врага! Опыт: +${expGain}`);
+
+    // Проверка повышения уровня
+    if (gameState.player.exp >= 100) {
+        levelUp();
+    }
+}
+
+// В функции attackPlayer добавьте проверку:
+// если враг убит, вызовите killEnemy
