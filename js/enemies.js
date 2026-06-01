@@ -18,18 +18,39 @@ function spawnEnemies(count) {
 
 function enemiesTurn() {
     gameState.enemies.forEach((enemy, index) => {
-        // Простое поведение: движение к игроку
-        if (enemy.x < gameState.player.x && canMove(enemy.x + 1, enemy.y)) enemy.x++;
-        else if (enemy.x > gameState.player.x && canMove(enemy.x - 1, enemy.y)) enemy.x--;
+        const distance = Math.abs(enemy.x - gameState.player.x) +
+                       Math.abs(enemy.y - gameState.player.y);
 
-        if (enemy.y < gameState.player.y && canMove(enemy.x, enemy.y + 1)) enemy.y++;
-        else if (enemy.y > gameState.player.y && canMove(enemy.x, enemy.y - 1)) enemy.y--;
+        if (distance <= 5) {
+            // Если близко — преследует
+            moveTowardsPlayer(enemy);
+        } else {
+            // Иначе бродит случайно
+            randomMove(enemy);
+        }
 
-        // Проверка столкновения с игроком
+        // Проверка столкновения
         if (enemy.x === gameState.player.x && enemy.y === gameState.player.y) {
             attackPlayer(enemy);
         }
     });
+}
+
+function moveTowardsPlayer(enemy) {
+    // Логика движения к игроку (аналогично предыдущей версии)
+    if (enemy.x < gameState.player.x && canMove(enemy.x + 1, enemy.y)) enemy.x++;
+    else if (enemy.x > gameState.player.x && canMove(enemy.x - 1, enemy.y)) enemy.x--;
+    if (enemy.y < gameState.player.y && canMove(enemy.x, enemy.y + 1)) enemy.y++;
+    else if (enemy.y > gameState.player.y && canMove(enemy.x, enemy.y - 1)) enemy.y--;
+}
+
+function randomMove(enemy) {
+    const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    const [dx, dy] = directions[Math.floor(Math.random() * directions.length)];
+    if (canMove(enemy.x + dx, enemy.y + dy)) {
+        enemy.x += dx;
+        enemy.y += dy;
+    }
 }
 
 function canMove(x, y) {
