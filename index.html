@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя простая игра</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Поймай шарик</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="game-container">
-        <h1>Моя игра</h1>
+        <h1>Поймай шарик!</h1>
+        <div class="stats">
+            <div>Счёт: <span id="score">0</span></div>
+            <div>Жизни: <span id="lives">3</span></div>
+        </div>
         <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div class="score">Счёт: <span id="score">0</span></div>
-        <button id="startButton">Начать игру</button>
+        <div class="controls">
+            <p>Управление: ← → или A/D</p>
+            <button id="startButton">Начать игру</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
